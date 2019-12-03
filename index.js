@@ -52,19 +52,27 @@ app.get('/users/:id', (req,res)=>{
 })
 
 app.delete('/users/:id', (req,res)=>{
+
     const id = req.params.id;
-    db.remove(id)
-    .then((user)=>{
+
+    
+    db.findById(id)
+    .then(user=>{
         if(!user){
-            res.status(404).json({message:'user with that id not found'})
-        }else{
-            res.status(200).json({user})
+            res.status(404).json({message:"id not found"})
         }
+    })
+    
+   db.remove(id)
+    .then(user=>{
+        res.status(201).json({message:"its been delted"})
         
     })
-    .catch((err)=>{
-        res.status(500).json({message:"user couldn't be removed"})
+    .catch(err=>{
+        res.status(500).json({err})
     })
+
+   
 })
 
 app.put('/users/:id', (req,res)=>{

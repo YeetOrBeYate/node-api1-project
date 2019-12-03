@@ -35,9 +35,7 @@ async function update(id, user) {
 }
 
  function remove(id) {
-   db('users')
+   return db('users')
     .where('id', Number(id))
-    .del();
-
-  
+    .del(); 
 }
